@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canyon Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #f5f7fa;
+            --text-color: #333;
+            --chat-bg: #fff;
+            --user-msg-bg: #e1f5fe;
+            --ai-msg-bg: #f0f4f8;
+            --turquoise: #40E0D0; /* Added turquoise color */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--background-color);
+        }
+
+        .header {
+            background-color: var(--secondary-color);
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-weight: 300;
+            font-size: 1.8rem;
+        }
+
+        .container {
+            display: flex;
+            flex-grow: 1;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        .chat-pane, .data-pane {
+            background-color: var(--chat-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1rem;
+        }
+
+        .chat-pane {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding: 1rem;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 18px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background-color: var(--user-msg-bg);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai-message {
+            background-color: var(--ai-msg-bg);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input input {
+            flex-grow: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 1rem;
+        }
+
+        .chat-input button {
+            padding: 0.8rem 1.2rem;
+            background-color: var(--turquoise); /* Changed to turquoise */
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .chat-input button:hover {
+            background-color: #30c0b0; /* Darker shade of turquoise for hover */
+        }
+
+        .data-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .file-upload {
+            margin-bottom: 1rem;
+        }
+
+        .file-upload input {
+            display: none;
+        }
+
+        .file-upload label {
+            display: inline-block;
+            padding: 0.8rem 1.2rem;
+            background-color: var(--turquoise); /* Changed to turquoise */
+            color: #fff;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .file-upload label:hover {
+            background-color: #30c0b0; /* Darker shade of turquoise for hover */
+        }
+
+        textarea {
+            flex-grow: 1;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 18px;
+            max-width: 80%;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: var(--user-msg-bg);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai-message {
+            background-color: var(--ai-msg-bg);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .ai-message h1, .ai-message h2, .ai-message h3, .ai-message h4 {
+            margin-top: 0.5em;
+            margin-bottom: 0.2em;
+        }
+
+        .ai-message h1 {
+            font-size: 1.3em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.2em;
+        }
+
+        .ai-message h2 {
+            font-size: 1.2em;
+        }
+
+        .ai-message h3 {
+            font-size: 1.1em;
+        }
+
+        .ai-message h4 {
+            font-size: 1em;
+        }
+
+        .ai-message ul, .ai-message ol {
+            padding-left: 1.2em;
+            margin-top: 0.2em;
+            margin-bottom: 0.2em;
+        }
+
+        .ai-message li {
+            margin-bottom: 0.1em;
+        }
+
+        .ai-message p {
+            margin-bottom: 0.3em;
+        }
+
+        .ai-message strong {
+            font-weight: 700;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Canyon Portal</h1>
+    </div>
+    <div class="container">
+        <div class="chat-pane">
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Type your message here...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+        <div class="data-pane">
+            <div class="file-upload">
+                <input type="file" id="fileUpload" accept=".txt,.doc,.docx,.pdf">
+                <label for="fileUpload">Upload File</label>
+            </div>
+            <textarea id="rawData" placeholder="Paste or type your raw data here..."></textarea>
+        </div>
+    </div>
+
+    <script>
+        let rawData = '';
+
+        document.getElementById('fileUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('rawData').value = e.target.result;
+                rawData = e.target.result;
+            };
+            reader.readAsText(file);
+        });
+
+        document.getElementById('rawData').addEventListener('input', function(e) {
+            rawData = e.target.value;
+        });
+
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        async function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim();
+            if (message === '') return;
+
+            addMessage('user', message);
+            userInput.value = '';
+
+            try {
+                const response = await fetch('http://localhost:5001/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ rawData, userMessage: message }),
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                addMessage('ai', data.artifact);
+            } catch (error) {
+                addMessage('ai', `Error: ${error.message}. Please try again.`);
+                console.error('Error:', error);
+            }
+        }
+
+        function addMessage(sender, content) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender === 'user' ? 'user-message' : 'ai-message');
+            
+            if (sender === 'ai') {
+                // Parse markdown-like syntax
+                content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                content = content.replace(/\n\s*\n/g, '\n'); // Remove extra blank lines
+                content = content.replace(/^[-*]\s(.+)$/gm, '<li>$1</li>');
+                content = content.split('\n').map(line => {
+                    if (line.trim().startsWith('<li>')) {
+                        return `<ul>${line}</ul>`;
+                    }
+                    if (line.trim().startsWith('#')) {
+                        const level = line.trim().match(/^#+/)[0].length;
+                        const text = line.trim().replace(/^#+\s*/, '');
+                        return `<h${level}>${text}</h${level}>`;
+                    }
+                    return `<p>${line}</p>`;
+                }).join('');
+                content = content.replace(/<\/ul><ul>/g, '');
+            }
+            
+            messageElement.innerHTML = content;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    </script>
+</body>
+</html>
+
+
